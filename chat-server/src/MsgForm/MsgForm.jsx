@@ -76,7 +76,6 @@ export default function MsgForm() {
         </div>
         <button type="submit">Send</button>
       </form>
-      <SearchMsg />
     </>
   );
 }
