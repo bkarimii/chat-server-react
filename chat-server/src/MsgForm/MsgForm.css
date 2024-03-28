@@ -1,0 +1,19 @@
+
+div{
+    margin-bottom: .3rem;
+}
+input{
+    width: 20rem;
+    height: 1.5rem;
+    border-radius: 2%;
+    border-style: none;
+}
+
+label{
+    width: 2rem;
+}
+
+button{
+    width: 5rem;
+    height: 2rem;
+}
