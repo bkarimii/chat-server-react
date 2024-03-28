@@ -1,14 +1,11 @@
 import { React, useState, useEffect } from "react";
 import "./MsgForm.css";
+import SearchMsg from "../SearchMsg/SearchMsg";
 // import { send } from "vite";
 
 export default function MsgForm() {
   const [msgText, setMsgText] = useState("");
   const [sender, setSender] = useState("");
-  const [postingObject, setPostingObject] = useState({
-    from: "",
-    text: "",
-  });
 
   async function postData(url = "", data = {}) {
     // Default options are marked with *
@@ -76,13 +73,9 @@ export default function MsgForm() {
             onChange={handleInputMsg}
           />
         </div>
-
         <button type="submit">Send</button>
       </form>
-      <form>
-        <input type="text" placeholder="Search for any word" />
-        <button type="submit">Search</button>
-      </form>
+      <SearchMsg />
     </>
   );
 }
