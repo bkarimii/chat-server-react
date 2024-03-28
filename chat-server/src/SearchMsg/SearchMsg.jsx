@@ -18,17 +18,20 @@ export default function SearchMsg() {
   const handleSearch = async (e) => {
     e.preventDefault();
     const finalSearchTerm = searchTerm;
-    const data = await getAllMessages(
-      `http://localhost:9090/messages/search?text=${finalSearchTerm}`
-    );
-    setAllMessages(data);
-    allMessages.map((object, index) => {
-      return (
-        <ul>
-          <li key={index}>{object.text}</li>
-        </ul>
+    if (finalSearchTerm.length !== 0) {
+      const data = await getAllMessages(
+        `http://localhost:9090/messages/search?text=${finalSearchTerm}`
       );
-    });
+      setAllMessages(data);
+      setsearchTerm("");
+      //   allMessages.map((obj, index) => {
+      //     <ul>
+      //       <li key={index}>{obj.text}</li>
+      //     </ul>;
+      //   });
+    } else {
+      alert("Please type something then search for!");
+    }
   };
   const handleInput = (e) => {
     setsearchTerm(e.target.value);
