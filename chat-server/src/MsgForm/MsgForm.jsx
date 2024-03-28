@@ -41,7 +41,8 @@ export default function MsgForm() {
       .catch((error) => {
         console.error(error);
       });
-
+    setMsgText("");
+    setSender("");
     console.log(postingObject);
   }
 
