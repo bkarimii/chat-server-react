@@ -12,3 +12,9 @@
 button{
     width: max-content;
 }
+
+li{
+    list-style: none;
+    border-bottom: 1px dashed black;
+    width: max-content;
+}

@@ -77,9 +77,12 @@ export default function SearchMsg() {
             latestMsgs.length > 0 &&
             latestMsgs.map((msgObject, index) => {
               return (
-                <li
-                  key={index}
-                >{`ID: ${msgObject.id} <br/> Messages: ${msgObject.text} <br/> Time/Date: ${msgObject.sentTime}/${msgObject.sentDate}`}</li>
+                <li key={index}>
+                  <br />
+                  {`ID: ${msgObject.id}`} <br />
+                  {`Messages: ${msgObject.text}`} <br />
+                  {`Time/Date: ${msgObject.sentTime} --- ${msgObject.sentDate}`}{" "}
+                </li>
               );
             })}
           {dataToShow === null && <ul></ul>}
