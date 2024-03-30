@@ -4,6 +4,7 @@ import MsgForm from "./MsgForm/MsgForm";
 import SearchMsg from "./SearchMsg/SearchMsg";
 import SearchById from "./SearchById/SearchById";
 import "./App.css";
+import SearchMsg from "./SearchMsg/SearchMsg";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <MsgForm />
       <SearchMsg />
       <SearchById />
+
     </>
   );
 }
