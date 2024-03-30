@@ -30,7 +30,9 @@ export default function SearchById() {
           console.log(data);
           setStatus(data);
         } else {
-          setStatus("couldn't delete it");
+          const data = await response.text();
+          console.log(data, "data inside the else part");
+          setStatus(data);
         }
       }
     } catch (error) {
