@@ -1,0 +1,14 @@
+#search-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+#search-container>form{
+    margin: 0;
+}
+#search-container>ul{
+    align-self: baseline;
+}
+button{
+    width: max-content;
+}

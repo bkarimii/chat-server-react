@@ -1,8 +1,14 @@
 import { React, useState, useEffect } from "react";
+import LatestMsgs from "../LatestMsgs/LatestMsgs";
+import "./SearchMsg.css";
 
 export default function SearchMsg() {
   const [allMessages, setAllMessages] = useState([]);
   const [searchTerm, setsearchTerm] = useState("");
+  const [latestMsgs, setLatestMsgs] = useState([]);
+  const [dataToShow, setDataToShow] = useState(null);
+
+  useEffect(() => {});
 
   async function getAllMessages(url) {
     try {
@@ -24,11 +30,6 @@ export default function SearchMsg() {
       );
       setAllMessages(data);
       setsearchTerm("");
-      //   allMessages.map((obj, index) => {
-      //     <ul>
-      //       <li key={index}>{obj.text}</li>
-      //     </ul>;
-      //   });
     } else {
       alert("Please type something then search for!");
     }
@@ -36,17 +37,27 @@ export default function SearchMsg() {
   const handleInput = (e) => {
     setsearchTerm(e.target.value);
   };
+
+  // this function should takes data from the child comp LatestMsgs and handle it
+  const handleLatestMsgs = (recentMsgs) => {
+    setLatestMsgs(recentMsgs);
+    console.log(latestMsgs, "this is latest msgs inside parent");
+  };
+
   return (
     <>
-      <form id="search-form" onSubmit={(e) => handleSearch(e)}>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleInput}
-          placeholder="Search for any word"
-        />
-        <button type="submit">Search</button>
-      </form>
+      <div id="search-container">
+        <form id="search-form" onSubmit={(e) => handleSearch(e)}>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={handleInput}
+            placeholder="Search for any word"
+          />
+          <button type="submit">Search </button>
+        </form>
+        <LatestMsgs onLatestMsgs={handleLatestMsgs} />
+      </div>
       <div>
         <ul>
           {allMessages.length > 0 &&
