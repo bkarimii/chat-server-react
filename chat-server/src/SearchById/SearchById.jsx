@@ -24,7 +24,7 @@ export default function SearchById() {
 
   const displayResults = (obj) => {
     return (
-      <div>
+      <div id="search-result-by-id">
         Id: {obj.id} <br />
         From: {obj.from} <br />
         Message: {obj.text} <br />
