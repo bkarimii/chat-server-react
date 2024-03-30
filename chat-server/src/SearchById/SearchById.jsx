@@ -36,8 +36,8 @@ export default function SearchById() {
     console.log(data);
     if (data.length !== 0) {
       setMsgOfId(data[0]);
-      displayResults(msgOfId);
     } else {
+      setMsgOfId({});
       alert("No result for this Id!");
     }
   };
@@ -53,10 +53,7 @@ export default function SearchById() {
         onChange={handleInput}
       />
       <button onClick={(e) => handleClick(e)}>Search By Message ID</button>
-      <div>
-        Id: {msgOfId.id} ,<br /> From: {msgOfId.from} ,<br /> Message:{" "}
-        {msgOfId.text}
-      </div>
+      {Object.keys(msgOfId).length > 0 ? displayResults(msgOfId) : null}
     </>
   );
 }
