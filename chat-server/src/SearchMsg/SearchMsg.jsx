@@ -3,14 +3,20 @@ import LatestMsgs from "../LatestMsgs/LatestMsgs";
 import "./SearchMsg.css";
 
 export default function SearchMsg() {
-  const [allMessages, setAllMessages] = useState([]);
+  const [searchedMsgs, setSearchedMsgs] = useState([]);
   const [searchTerm, setsearchTerm] = useState("");
   const [latestMsgs, setLatestMsgs] = useState([]);
   const [dataToShow, setDataToShow] = useState(null);
 
-  useEffect(() => {});
+  //question , why should we put this inside useEffect ?
+  useEffect(() => {
+    if (latestMsgs.length > 0) {
+      setDataToShow("latestMsgs");
+    }
+    console.log(latestMsgs, "latest msgs useeffect parent");
+  }, [latestMsgs]);
 
-  async function getAllMessages(url) {
+  async function getSearchedMsgs(url) {
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -23,12 +29,13 @@ export default function SearchMsg() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
+    setDataToShow("searchedMsgs");
     const finalSearchTerm = searchTerm;
     if (finalSearchTerm.length !== 0) {
-      const data = await getAllMessages(
+      const data = await getSearchedMsgs(
         `http://localhost:9090/messages/search?text=${finalSearchTerm}`
       );
-      setAllMessages(data);
+      setSearchedMsgs(data);
       setsearchTerm("");
     } else {
       alert("Please type something then search for!");
@@ -39,9 +46,8 @@ export default function SearchMsg() {
   };
 
   // this function should takes data from the child comp LatestMsgs and handle it
-  const handleLatestMsgs = (recentMsgs) => {
+  const handleLatestMsgs = async (recentMsgs) => {
     setLatestMsgs(recentMsgs);
-    console.log(latestMsgs, "this is latest msgs inside parent");
   };
 
   return (
@@ -58,12 +64,25 @@ export default function SearchMsg() {
         </form>
         <LatestMsgs onLatestMsgs={handleLatestMsgs} />
       </div>
+      <div></div>
       <div>
         <ul>
-          {allMessages.length > 0 &&
-            allMessages.map((obj, index) => {
+          {dataToShow === "searchedMsgs" &&
+            searchedMsgs.length > 0 &&
+            searchedMsgs.map((obj, index) => {
               return <li key={index}>{obj.text}</li>;
             })}
+          {dataToShow === "latestMsgs" &&
+            latestMsgs &&
+            latestMsgs.length > 0 &&
+            latestMsgs.map((msgObject, index) => {
+              return (
+                <li
+                  key={index}
+                >{`ID: ${msgObject.id} <br/> Messages: ${msgObject.text} <br/> Time/Date: ${msgObject.sentTime}/${msgObject.sentDate}`}</li>
+              );
+            })}
+          {dataToShow === null && <ul></ul>}
         </ul>
       </div>
     </>
