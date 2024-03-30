@@ -8,21 +8,33 @@ export default function SearchById() {
 
   //this is the msg comes back from the server with the corresponding id
   const [msgOfId, setMsgOfId] = useState({});
+  //status of deletion of the message
   const [status, setStatus] = useState("");
 
+  const [searchOrDelete, setSearchOrDelete] = useState(null);
   //this fetch function delete a specific msg from server
   const handleDeleteClick = async (e) => {
+    setSearchOrDelete("delete");
     try {
-      const response = await fetch(`http://localhost:9090/messages/${msgId}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        setStatus("Delete successful");
-        console.log(response.json());
-      } else {
-        setStatus("couldn't delete it");
+      if (msgId) {
+        const response = await fetch(
+          `http://localhost:9090/messages/${msgId}`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.ok) {
+          setStatus("Delete successful");
+
+          const data = await response.text();
+          console.log(data);
+          setStatus(data);
+        } else {
+          setStatus("couldn't delete it");
+        }
       }
     } catch (error) {
+      setStatus("An error happened!");
       console.error(error);
     }
   };
@@ -51,13 +63,16 @@ export default function SearchById() {
     );
   };
   const handleClick = async (e) => {
-    const data = await findMsg(`http://localhost:9090/messages/${msgId}`);
-    console.log(data);
-    if (data.length !== 0) {
-      setMsgOfId(data[0]);
-    } else {
-      setMsgOfId({});
-      alert("No result for this Id!");
+    setSearchOrDelete("search");
+    if (msgId) {
+      const data = await findMsg(`http://localhost:9090/messages/${msgId}`);
+      console.log(data);
+      if (data.length !== 0) {
+        setMsgOfId(data[0]);
+      } else {
+        setMsgOfId({});
+        alert("No result for this Id!");
+      }
     }
   };
   const handleInput = (e) => {
@@ -73,7 +88,11 @@ export default function SearchById() {
       />
       <button onClick={(e) => handleClick(e)}>Search it</button>
       <button onClick={(e) => handleDeleteClick(e)}>Delete it</button>
-      {Object.keys(msgOfId).length > 0 ? displayResults(msgOfId) : null}
+      {/* {Object.keys(msgOfId).length > 0 ? displayResults(msgOfId) : null} */}
+      {Object.keys(msgOfId).length > 0 && searchOrDelete === "search"
+        ? displayResults(msgOfId)
+        : null}
+      {searchOrDelete === "delete" ? <div>{status}</div> : null}
     </>
   );
 }
