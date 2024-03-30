@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import "./MsgForm.css";
-import SearchMsg from "../SearchMsg/SearchMsg";
+
 // import { send } from "vite";
 
 export default function MsgForm() {
