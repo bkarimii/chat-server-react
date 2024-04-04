@@ -9,4 +9,22 @@
     /* Maximum height */
     overflow-y: auto;
     /* Enable vertical scrolling */
+
+    list-style: none;
+    width: 30%;
+    margin: .3rem ;
+    word-wrap: break-word;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#users-name{
+    font-size: large;
+}
+
+#chat-history>span{
+    font-size: .8em;
+
+}
+i{
+    margin: 10px;
 }
