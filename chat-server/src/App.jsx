@@ -9,8 +9,8 @@ export default function App() {
   return (
     <>
       <MsgForm />
-      <SearchMsg />
-      <SearchById />
+      {/* <SearchMsg /> */}
+      {/* <SearchById /> */}
     </>
   );
 }

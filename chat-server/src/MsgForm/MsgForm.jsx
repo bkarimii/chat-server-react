@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import "./MsgForm.css";
+import LatestMsgs from "../LatestMsgs/LatestMsgs";
 
 // import { send } from "vite";
 
@@ -22,6 +23,9 @@ export default function MsgForm() {
     return response.json(); // parses JSON response into native JavaScript objects
   }
 
+  const runkitLink =
+    "https://chat-server-behrouz-karimi-5l4glcbel8q1.runkit.sh/messages";
+  const link = "http://localhost:9090/messages";
   function chatInfo(e) {
     e.preventDefault();
 
@@ -29,7 +33,7 @@ export default function MsgForm() {
       from: sender,
       text: msgText,
     };
-    postData("http://localhost:9090/messages", postingObject)
+    postData(link, postingObject)
       .then((response) => {
         if (response.error) {
           return alert(response.error);
@@ -76,6 +80,7 @@ export default function MsgForm() {
         </div>
         <button type="submit">Send</button>
       </form>
+      <LatestMsgs />
     </>
   );
 }

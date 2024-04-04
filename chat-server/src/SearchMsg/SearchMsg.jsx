@@ -1,6 +1,5 @@
-import { React, useState, useEffect } from "react";
-import LatestMsgs from "../LatestMsgs/LatestMsgs";
-import "./SearchMsg.css";
+import { React, useState } from "react";
+// import LatestMsgs from "../LatestMsgs/LatestMsgs";
 
 export default function SearchMsg() {
   const [searchedMsgs, setSearchedMsgs] = useState([]);
@@ -8,25 +7,17 @@ export default function SearchMsg() {
   const [latestMsgs, setLatestMsgs] = useState([]);
   const [dataToShow, setDataToShow] = useState(null);
   const [searchedFor, setSearchedFor] = useState("");
+  const [latestMsgsVisible, setLatestMsgsVisible] = useState(false);
 
-  //question , why should we put this inside useEffect ?
-  // useEffect(() => {
-  //   if (latestMsgs.length > 0) {
-  //     setDataToShow("latestMsgs");
-  //   }
-  //   console.log(latestMsgs, "latest msgs useeffect parent");
-  // }, [latestMsgs]);
+  const handleToggleLatestMsgsVisibility = (isVisible) => {
+    setLatestMsgsVisible(isVisible);
+  };
 
-  async function getSearchedMsgs(url) {
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  }
+  const handleLatestMsgs = async (recentMsgs) => {
+    setLatestMsgs(recentMsgs);
+    setDataToShow("latestMsgs");
+    setLatestMsgsVisible(true); // Make latest messages visible when received
+  };
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -45,20 +36,15 @@ export default function SearchMsg() {
       alert("Please type something then search for!");
     }
   };
+
   const handleInput = (e) => {
     setsearchTerm(e.target.value);
-  };
-
-  // this function should takes data from the child comp LatestMsgs and handle it
-  const handleLatestMsgs = async (recentMsgs) => {
-    setLatestMsgs(recentMsgs);
-    setDataToShow("latestMsgs");
   };
 
   return (
     <>
       <div id="search-container">
-        <form id="search-form" onSubmit={(e) => handleSearch(e)}>
+        <form id="search-form" onSubmit={handleSearch}>
           <input
             type="text"
             value={searchTerm}
@@ -67,34 +53,24 @@ export default function SearchMsg() {
           />
           <button type="submit">Search </button>
         </form>
-        <LatestMsgs onLatestMsgs={handleLatestMsgs} />
+        <LatestMsgs
+          onLatestMsgs={handleLatestMsgs}
+          onHideLatestMsgs={handleToggleLatestMsgsVisibility}
+        />
       </div>
-      <div></div>
       <div>
         <ul>
           {/* render data for a searched text */}
-          {dataToShow === "searchedMsgs" &&
-            searchedMsgs.length > 0 &&
-            searchedFor.length != 0 && (
-              <div> You searched for {`"${searchedFor}"`} : </div>
-            )}
-          {dataToShow === "searchedMsgs" &&
-            searchedMsgs.length > 0 &&
-            searchedMsgs.map((obj, index) => {
-              return <li key={index}>{obj.text}</li>;
-            })}
-          {dataToShow === "searchedMsgs" &&
-            searchedMsgs.length == 0 &&
-            searchedFor.length != 0 && (
-              <div>No result found for {`"${searchedFor}"`}</div>
-            )}
+          {/* Code for rendering searched messages */}
 
           {/* render data of latest msgs */}
           {dataToShow === "latestMsgs" &&
+            latestMsgsVisible &&
             latestMsgs &&
             latestMsgs.length > 0 && <div> Your Most recent chat's data:</div>}
 
           {dataToShow === "latestMsgs" &&
+            latestMsgsVisible &&
             latestMsgs &&
             latestMsgs.length > 0 &&
             latestMsgs.map((msgObject, index) => {
