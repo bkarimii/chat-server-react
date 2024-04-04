@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import "./MsgForm.css";
+import LatestMsgs from "../LatestMsgs/LatestMsgs";
 
 // import { send } from "vite";
 
@@ -76,6 +77,7 @@ export default function MsgForm() {
         </div>
         <button type="submit">Send</button>
       </form>
+      <LatestMsgs />
     </>
   );
 }

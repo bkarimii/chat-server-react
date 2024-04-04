@@ -1,0 +1,12 @@
+#chat-history {
+    background-color: #f0f0f0;
+    /* Background color */
+    padding: 10px;
+    /* Padding */
+    border-radius: 10px;
+    /* Rounded corners */
+    max-height: 300px;
+    /* Maximum height */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+}
